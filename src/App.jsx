@@ -36,33 +36,52 @@ function App() {
           </NavbarContent>
         </Navbar>
         <div className="container mx-auto px-4 lg:px-16">
-          <div className="lg:px-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-4 my-8 lg:my-12">
-            <div className="flex flex-col justify-center items-center lg:items-start lg:text-left text-center">
-              {/* my cartoon */}
-              <div className="flex items-center justify-center">
-                <Image
-                  width={150}
-                  height={160}
-                  alt="Cartoon Bimo"
-                  src={asset1} // Use the correct variable
-                />
-                <div className="flex items-center ml-4">
-                  <Image src={arrow} width={77} height={35} alt="Arrow" className="w-[77px] h-[35px] mt-8" />
-                  <p className="font-bold bg-blue-100 ml-2">Bimo</p>
+          <div className="px-8 py-16 lg:px-16 lg:py-32 h-screen ">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-4 my-8 lg:my-12">
+              <div className="flex flex-col justify-center items-center lg:items-start lg:text-left text-center">
+                {/* my cartoon */}
+                <div className="flex items-center justify-center">
+                  <Image
+                    width={150}
+                    height={160}
+                    alt="Cartoon Bimo"
+                    src={asset1} // Use the correct variable
+                  />
+                  <div className="flex items-center ml-4">
+                    <Image src={arrow} width={77} height={35} alt="Arrow" className="w-[77px] h-[35px] mt-8" />
+                    <p className="font-bold bg-blue-100 ml-2">Bimo</p>
+                  </div>
                 </div>
+                {/* end my cartoon */}
+                <p className="font-bold text-4xl lg:text-6xl mt-4">I develop websites and programs!</p>
               </div>
-              {/* end my cartoon */}
-              <p className="font-bold text-4xl lg:text-6xl mt-4">I develop websites and programs!</p>
-            </div>
-            <div className="flex flex-col items-center lg:items-end justify-center">
-              <p className="text-lg text-center lg:text-right lg:text-[24px]">I'll make your little dreams become true.</p>
-              <Button className="mt-4 bg-black text-white rounded-md text-center lg:px-10 lg:py-6 lg:text-[24px]" href="#">
-                Hire me
-              </Button>
+              <div className="flex flex-col items-center lg:items-end justify-center">
+                <p className="text-lg text-center lg:text-right lg:text-[24px]">I'll make your little dreams become true.</p>
+                <Button className="mt-4 bg-black text-white rounded-md text-center lg:px-10 lg:py-6 lg:text-[24px]" href="#">
+                  Hire me
+                </Button>
+              </div>
             </div>
           </div>
-          </div>
+          <div id='about' className="px-8 py-16 lg:px-16 lg:py-32">
+          <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+        <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-8 lg:mb-0">
+          <Image 
+            src="me.jpeg"
+            alt="Your Name" 
+            width={300} 
+            height={300} 
+            className="rounded-full shadow-lg"
+          />
+        </div>
+        <div className="w-full lg:w-1/2 text-center lg:text-left">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">About Me</h1>
+          <p className="text-lg lg:text-xl text-gray-700">
+            Hi, I'm Bimo! I'm a passionate developer who loves creating beautiful and functional websites and programs. My journey in the tech world began a few years ago, and since then, I've been continuously learning and growing. I believe in the power of technology to bring ideas to life and make the world a better place. Let's build something amazing together!
+          </p>
+        </div>
+      </div>
+    </div>
           <div className="px-8 py-16 lg:px-16 lg:py-32">
             <div className="bg-blue-100 w-[190px] my-12 items-center justify-center">
               <p className="font-handlee text-xl font-bold">This is what I love to do</p>
@@ -98,32 +117,32 @@ function App() {
               </div>
               <div className="space-y-8">
                 <div className="flex items-start">
-                  <Card className="w-[50px] h-[50px] bg-yellow-200 flex items-center justify-center rounded-lg mr-4 border-1 border-yellow-400">
+                  <Card className="w-[50px] h-[50px] flex-shrink-0 bg-yellow-200 flex items-center justify-center rounded-lg mr-4 border-1 border-yellow-400">
                     <p className="font-bold text-xl">1</p>
                   </Card>
                   <div>
                     <p className="font-bold text-lg">IT Development staff at <span className="text-black">ISE! 2024</span></p>
-                    <p>Worked on design system at Material 3 designs</p>
+                    <p>Responsible for making user interface on the website using Next.JS and Tailwind CSS.</p>
                     <p className="text-sm text-gray-500">April 2024 - Now</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <Card className="w-[50px] h-[50px] bg-blue-200 flex items-center justify-center rounded-lg mr-4 border-1 border-blue-400">
+                  <Card className="w-[50px] h-[50px] flex-shrink-0 bg-blue-200 flex items-center justify-center rounded-lg mr-4 border-1 border-blue-400">
                     <p className="font-bold text-xl">2</p>
                   </Card>
                   <div>
                     <p className="font-bold text-lg">Technology Development Intern at <span className="text-black">HMSI</span></p>
-                    <p>Worked on design system at Material 3 designs</p>
+                    <p>Became one of the committee members for the programming tutorial program held by the Technology Development HMSI ITS division.</p>
                     <p className="text-sm text-gray-500">Juli 2024 - Now</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <Card className="w-[50px] h-[50px] bg-pink-200 flex items-center justify-center rounded-lg mr-4 border-1 border-pink-400">
+                  <Card className="w-[50px] h-[50px] flex-shrink-0 bg-pink-200 flex items-center justify-center rounded-lg mr-4 border-1 border-pink-400">
                     <p className="font-bold text-xl">3</p>
                   </Card>
                   <div>
                     <p className="font-bold text-lg">Programming Intern at <span className="text-black">IRIS Robotic Team</span></p>
-                    <p>Worked on design system at Material 3 designs</p>
+                    <p>Understand the concept and use of ROS to regulate systems on robots. And carrying out a project that combines all concepts, the development of autonomous robots.</p>
                     <p className="text-sm text-gray-500">Januari 2024 - Februari 2024</p>
                   </div>
                 </div>
@@ -144,21 +163,15 @@ function App() {
                   This is a template Figma file, turned into code using Anima. Learn more at AnimaApp.com.
                 </p>
                 <div className="flex space-x-4 justify-center lg:justify-start">
-                  <a href="#" className="text-black">
-                    <i className="fab fa-discord"></i>
-                  </a>
-                  <a href="#" className="text-black">
-                    <i className="fab fa-facebook"></i>
-                  </a>
-                  <a href="#" className="text-black">
-                    <i className="fab fa-dribbble"></i>
-                  </a>
-                  <a href="#" className="text-black">
+                  <Link href="https://www.instagram.com/bimo_rajendra_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-black text-3xl hover:text-blue-600 transition-colors">
                     <i className="fab fa-instagram"></i>
-                  </a>
-                  <a href="#" className="text-black">
-                    <i className="fab fa-behance"></i>
-                  </a>
+                  </Link>
+                  <Link href="https://github.com/bimorajendraa/" className="text-black text-3xl hover:text-blue-600 transition-colors">
+                    <i className="fab fa-github"></i>
+                  </Link>
+                  <Link href="www.linkedin.com/in/bimo-rajendra-64139a284" className="text-black text-3xl hover:text-blue-600 transition-colors">
+                    <i className="fab fa-linkedin"></i>
+                  </Link>
                 </div>
               </div>
               <div className="lg:w-1/2 mt-8 lg:mt-0">
