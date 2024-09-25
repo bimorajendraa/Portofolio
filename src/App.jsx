@@ -36,7 +36,7 @@ function App() {
           </NavbarContent>
         </Navbar>
         <div className="container mx-auto px-4 lg:px-16">
-          <div className="px-8 py-16 lg:px-16 lg:py-32 h-screen ">
+          <div className="px-8 py-16 lg:px-16 lg:pb-32 h-full ">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-4 my-8 lg:my-12">
               <div className="flex flex-col justify-center items-center lg:items-start lg:text-left text-center">
                 {/* my cartoon */}
@@ -64,45 +64,45 @@ function App() {
             </div>
           </div>
           <div id='about' className="px-8 py-16 lg:px-16 lg:py-32">
-          <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-8 lg:mb-0">
-          <Image 
-            src="me.jpeg"
-            alt="Your Name" 
-            width={300} 
-            height={300} 
-            className="rounded-full shadow-lg"
-          />
-        </div>
-        <div className="w-full lg:w-1/2 text-center lg:text-left">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">About Me</h1>
-          <p className="text-lg lg:text-xl text-gray-700">
-            Hi, I'm Bimo! I'm a passionate developer who loves creating beautiful and functional websites and programs. My journey in the tech world began a few years ago, and since then, I've been continuously learning and growing. I believe in the power of technology to bring ideas to life and make the world a better place. Let's build something amazing together!
-          </p>
-        </div>
-      </div>
-    </div>
+            <div className="flex flex-col items-center lg:flex-row lg:justify-between">
+              <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-8 lg:mb-0">
+                <Image 
+                  src="me.jpeg"
+                  alt="Your Name" 
+                  width={300} 
+                  height={300} 
+                  className="rounded-full shadow-lg"
+                />
+              </div>
+              <div className="w-full lg:w-1/2 text-center lg:text-left">
+                <h1 className="text-4xl lg:text-5xl font-bold mb-4">About Me</h1>
+                <p className="text-lg lg:text-xl text-gray-700">
+                  Hi, I'm Bimo! I'm a passionate developer who loves creating beautiful and functional websites and programs. My journey in the tech world began a few years ago, and since then, I've been continuously learning and growing. I believe in the power of technology to bring ideas to life and make the world a better place. Let's build something amazing together!
+                </p>
+              </div>
+            </div>
+          </div>
           <div className="px-8 py-16 lg:px-16 lg:py-32">
             <div className="bg-blue-100 w-[190px] my-12 items-center justify-center">
               <p className="font-handlee text-xl font-bold">This is what I love to do</p>
             </div>
             <div className="flex flex-wrap justify-center items-start space-x-4">
-              <Card className="h-[300px] transition-all duration-300 hover:transition-all hover:duration-300 hover:h-[400px] w-[300px] bg-yellow-200 border-2 border-yellow-400 rotate-[-8deg] hover:rotate-0">
+              <Card className="h-[300px] transition-all duration-300 w-[300px] bg-yellow-200 border-2 border-yellow-400 rotate-[-8deg] hover:rotate-0">
                 <CardBody>
-                  <p className="font-bold">User Research Design</p>
-                  <p>Developing Website</p>
+                  <p className="font-bold">Web Development</p>
+                  <p>Building and designing websites with modern technologies like HTML, CSS, JavaScript, and frameworks. It's all about creating fast, functional, and user-friendly websites.</p>
                 </CardBody>
               </Card>
-              <Card className="h-[400px] w-[300px] bg-blue-200 border-2 border-blue-400 rotate-[10deg] hover:rotate-0">
+              <Card className="h-[300px] w-[300px] bg-blue-200 border-2 border-blue-400 rotate-[10deg] hover:rotate-0">
                 <CardBody>
                   <p className="font-bold">UI & Product Design</p>
-                  <p>Figma</p>
+                  <p>Crafting intuitive, aesthetically pleasing user interfaces and user experiences that solve real problems and delight users. This includes prototyping with tools like Figma and conducting user research.</p>
                 </CardBody>
               </Card>
-              <Card className="h-[400px] w-[300px] bg-pink-200 border-2 border-pink-400 rotate-[-7deg] hover:rotate-0">
+              <Card className="h-[300px] w-[300px] bg-pink-200 border-2 border-pink-400 rotate-[-7deg] hover:rotate-0">
                 <CardBody>
-                  <p className="font-bold">No-code Development</p>
-                  <p>Learn Something New</p>
+                  <p className="font-bold">Exploring New Things</p>
+                  <p>Always eager to learn and experiment with new technologies, tools, or methodologies. Whether it's no-code platforms, new libraries, somewhere new, or AI tools, the goal is to keep evolving.</p>
                 </CardBody>
               </Card>
             </div>
@@ -153,14 +153,14 @@ function App() {
       </div>
       <div className="bg-white w-full">
           <div className="container mx-auto px-4 lg:px-16 py-16">
-            <div className="flex flex-col lg:flex-row justify-between items-center border-t pt-8">
+            <div className="flex flex-col lg:flex-row justify-between items-center border-t pt-8 gap-32">
               <div className="lg:w-1/2 text-center lg:text-left">
                 <h2 className="font-bold text-5xl">Let’s work together</h2>
                 <p className="text-gray-500 my-4">
-                  This is a template Figma file, turned into code using Anima. Learn more at AnimaApp.com.
+                  Ready to turn your ideas into reality? Whether you’re looking for a fresh perspective, need help with a project, or just want to chat about tech, I'm here to collaborate. Let’s bring your vision to life and make something amazing together!
                 </p>
                 <p className="text-gray-500 mb-4">
-                  This is a template Figma file, turned into code using Anima. Learn more at AnimaApp.com.
+                Let's build something great!
                 </p>
                 <div className="flex space-x-4 justify-center lg:justify-start">
                   <Link href="https://www.instagram.com/bimo_rajendra_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-black text-3xl hover:text-blue-600 transition-colors">
