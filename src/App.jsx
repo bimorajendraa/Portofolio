@@ -1,354 +1,1138 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  Button,
-  Card,
-  CardBody,
-  Image,
-} from "@nextui-org/react";
-import "./index.css"; // Import the CSS file
-import asset1 from "./assets/asset1.png"; // Correct path to the image
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useTransform,
+} from "framer-motion";
+import {
+  BookOpen,
+  Briefcase,
+  Code2,
+  Cpu,
+  Database,
+  ExternalLink,
+  FileText,
+  Github,
+  Home,
+  Instagram,
+  Layers,
+  Linkedin,
+  Mail,
+  MapPin,
+  Moon,
+  Palette,
+  Server,
+  ShieldCheck,
+  Sun,
+  Terminal,
+  Youtube,
+} from "lucide-react";
+import "./index.css";
+import asset1 from "./assets/asset1.png";
 import arrow from "./assets/arrow.png";
-import AOS from "aos";
-import "aos/dist/aos.css"; // You can also use <link> for styles
-import { useEffect } from "react";
 
-function App() {
-  useEffect(() => {
-    AOS.init();
-  }, []);
-  const experiences = [
-    {
-      id: 1,
-      title: "IT Development Staff",
-      company: "ISE! 2024",
-      description:
-        "Responsible for making user interface on the website using Next.JS and Tailwind CSS.",
-      date: "April 2024 - Now",
-      bgColor: "bg-yellow-200",
-      borderColor: "border-yellow-400",
-    },
-    {
-      id: 2,
-      title: "Technology Development Intern",
-      company: "HMSI",
-      description:
-        "Became one of the committee members for the programming tutorial program held by the Technology Development HMSI ITS division.",
-      date: "Juli 2024 - Now",
-      bgColor: "bg-blue-200",
-      borderColor: "border-blue-400",
-    },
-    {
-      id: 3,
-      title: "Programming Intern",
-      company: "IRIS Robotic Team",
-      description:
-        "Understand the concept and use of ROS to regulate systems on robots. And carrying out a project that combines all concepts, the development of autonomous robots.",
-      date: "Januari 2024 - Februari 2024",
-      bgColor: "bg-pink-200",
-      borderColor: "border-pink-400",
-    },
-    {
-      id: 4,
-      title: "IT Development Expert Staff",
-      company: "Ini Lho ITS 2025",
-      description:
-        "Sliced pages, resolved bugs, and ensured the website operated smoothly without errors. Also responsible for integration and coordinating with other IT Development divisions.",
-      date: "September 2024 - Now",
-      bgColor: "bg-green-200",
-      borderColor: "border-green-400",
-    },
-    {
-      id: 5,
-      title: "IT Development Staff",
-      company: "Petrolida 2025",
-      description:
-        "Contributed to the development of the Petrolida 2025 website by implementing UI slicing, debugging, and seamless integrations while collaborating with cross-functional teams.",
-      date: "Oktober 2024 - Now",
-      bgColor: "bg-purple-200",
-      borderColor: "border-purple-400",
-    },
-    {
-      id: 6,
-      title: "Head of Division, Web Development",
-      company: "Imajas ITS",
-      description:
-        "Led the Web Development division, overseeing page slicing, bug resolution, website performance optimization, and integration. Fostered effective collaboration within the team and across divisions.",
-      date: "Oktober 2024 - Now",
-      bgColor: "bg-orange-200",
-      borderColor: "border-orange-400",
-    },
+const links = {
+  email: "mailto:bimorajendraa@gmail.com",
+  github: "https://github.com/bimorajendraa",
+  linkedin: "https://www.linkedin.com/in/bimo-rajendra-64139a284",
+  instagram:
+    "https://www.instagram.com/bimo_rajendra_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+};
+
+const heroCards = [
+  {
+    title: "LISSA + BESTIE",
+    meta: "PLN internal web apps",
+    href: "https://lissa-app.anargya.fun/",
+    color: "bg-cyan-100 dark:bg-cyan-300",
+    text: "Secure workflows, AI API, RBAC",
+    float: "float-a",
+    rotate: -7,
+    position: "lg:left-6 lg:top-20",
+  },
+  {
+    title: "UI/UX Systems",
+    meta: "Aksara, TreeLand, Tutor",
+    href: "https://www.figma.com/design/AYqpWNFyWNtl0fosXMpn2q/HOLOGY?node-id=1-2&t=CXIgDgSRJI7vXqB2-1",
+    color: "bg-lime-100 dark:bg-lime-300",
+    text: "Interfaces that turn messy flows into clear product screens",
+    float: "float-b",
+    rotate: 5,
+    position: "lg:left-[27%] lg:top-0",
+  },
+  {
+    title: "GRC + Security",
+    meta: "Pentest reports and risk notes",
+    href: "https://docs.google.com/document/d/1p0E67x-X7_JSC9v1oCYz7LesBsoKb9r0p5JDA_Av4kU/edit?usp=sharing",
+    color: "bg-rose-100 dark:bg-rose-300",
+    text: "OWASP ZAP, PortSwigger, validation-aware development",
+    float: "float-c",
+    rotate: -4,
+    position: "lg:right-[26%] lg:top-24",
+  },
+  {
+    title: "Infrastructure",
+    meta: "Docker, EC2, Redis, Linux",
+    href: "#skills",
+    color: "bg-amber-100 dark:bg-amber-300",
+    text: "Web servers, networking labs, deployment monitoring",
+    float: "float-d",
+    rotate: 6,
+    position: "lg:right-8 lg:top-4",
+  },
+];
+
+const coreSkills = [
+  {
+    icon: ShieldCheck,
+    title: "Security-Aware Apps",
+    description:
+      "RBAC, authorization checks, input validation, secure API integration, and SQL injection risk mitigation.",
+    tags: ["OWASP ZAP", "PortSwigger", "Auth", "Risk"],
+    tone: "border-cyan-300 bg-cyan-50 dark:bg-cyan-950/40",
+  },
+  {
+    icon: Layers,
+    title: "Product + UI/UX",
+    description:
+      "Requirements, BPMN, SRS, Figma prototypes, usability flows, and interface QA from idea to handoff.",
+    tags: ["Figma", "BPMN", "SRS", "QA"],
+    tone: "border-lime-300 bg-lime-50 dark:bg-lime-950/30",
+  },
+  {
+    icon: Server,
+    title: "Infrastructure",
+    description:
+      "Docker, AWS EC2, Redis caching, Linux, web servers, computer networking, and monitoring fundamentals.",
+    tags: ["Docker", "AWS EC2", "Redis", "Linux"],
+    tone: "border-amber-300 bg-amber-50 dark:bg-amber-950/30",
+  },
+  {
+    icon: Code2,
+    title: "Web Development",
+    description:
+      "Next.js, Vite, React, Tailwind CSS, Material UI, shadcn/ui, REST APIs, AI APIs, and debugging.",
+    tags: ["React", "Next.js", "Tailwind", "API"],
+    tone: "border-rose-300 bg-rose-50 dark:bg-rose-950/30",
+  },
+];
+
+const techStack = [
+  { name: "React", src: "/react.png" },
+  { name: "Next.js", src: "/nextjs.png" },
+  { name: "Tailwind CSS", src: "/tailwindcss.png" },
+  { name: "Figma", src: "/figma.png" },
+  { name: "Python", src: "/python.png" },
+  { name: "C++", src: "/c++.png" },
+  { name: "Vite", src: "/vite.png" },
+];
+
+const appProjects = [
+  {
+    title: "Aksara",
+    type: "App + Repository",
+    href: "https://github.com/bimorajendraa/aksara",
+    summary:
+      "Application build connected to product design work, focused on usable flows and maintainable frontend structure.",
+    tags: ["React", "Frontend", "GitHub"],
+    accent: "from-lime-200 via-white to-cyan-100",
+    short: "AKS",
+  },
+  {
+    title: "LISSA",
+    type: "PLN Internal App",
+    href: "https://lissa-app.anargya.fun/",
+    summary:
+      "Internal web application with database-backed workflows, AI API integration, and security-conscious access controls.",
+    tags: ["AI API", "RBAC", "Database", "Secure Web"],
+    accent: "from-cyan-200 via-white to-sky-100",
+    short: "LIS",
+  },
+  {
+    title: "BESTIE",
+    type: "PLN Internal App",
+    href: "https://bestie-app.anargya.fun/",
+    summary:
+      "Web platform contribution across architecture choices, feature development, validation, and application workflows.",
+    tags: ["Web App", "API", "Auth", "Workflow"],
+    accent: "from-rose-200 via-white to-amber-100",
+    short: "BES",
+  },
+  {
+    title: "Conation",
+    type: "Contract Frontend",
+    href: "https://www.conation.co.id/",
+    summary:
+      "Converted UI designs into responsive pages, integrated required flows, and resolved functional/UI bugs with Beta-U.",
+    tags: ["Next.js", "Tailwind", "API", "QA"],
+    accent: "from-zinc-200 via-white to-lime-100",
+    short: "CON",
+  },
+  {
+    title: "Study at SAC",
+    type: "Part-time Frontend",
+    href: "https://studyatsac.com/",
+    summary:
+      "Built responsive and interactive interfaces with Vite, Tailwind CSS, Material UI, and backend API collaboration.",
+    tags: ["Vite", "Material UI", "Tailwind", "API"],
+    accent: "from-amber-200 via-white to-cyan-100",
+    short: "SAC",
+  },
+  {
+    title: "RDK ITS",
+    type: "Organization Platform",
+    href: "https://www.rdk-its.com/",
+    summary:
+      "Public-facing web delivery with responsive implementation, troubleshooting, and cross-team coordination.",
+    tags: ["Frontend", "Responsive", "Deployment"],
+    accent: "from-slate-200 via-white to-rose-100",
+    short: "RDK",
+  },
+  {
+    title: "Asuka Trainee",
+    type: "Web Platform",
+    href: "https://asukatrainee-fe.vercel.app/",
+    summary:
+      "Frontend implementation for committee/product needs with clean navigation, component structure, and deployment.",
+    tags: ["Vercel", "Frontend", "UI"],
+    accent: "from-lime-200 via-white to-amber-100",
+    short: "ASK",
+  },
+  {
+    title: "TEDx ITS 2025",
+    type: "Event Website",
+    href: "https://tedxits2025-frontend.vercel.app/",
+    summary:
+      "Implemented responsive pages, animations, bug fixes, and API-based dashboard/detail flows for an event platform.",
+    tags: ["Next.js", "shadcn/ui", "Animation", "Dashboard"],
+    accent: "from-red-200 via-white to-zinc-100",
+    short: "TED",
+  },
+  {
+    title: "MUN 2025",
+    type: "Event Website",
+    href: "https://mun2025-fe.vercel.app/",
+    summary:
+      "Frontend delivery for an event experience, keeping content structured, responsive, and ready for public access.",
+    tags: ["Frontend", "Vercel", "Event"],
+    accent: "from-cyan-200 via-white to-rose-100",
+    short: "MUN",
+  },
+  {
+    title: "Petrolida 2025",
+    type: "Event Website",
+    href: "https://petrolida2025-fe.vercel.app/",
+    summary:
+      "Contributed UI slicing, debugging, and integrations while collaborating with cross-functional event teams.",
+    tags: ["Next.js", "Tailwind", "Integration"],
+    accent: "from-amber-200 via-white to-lime-100",
+    short: "PET",
+  },
+];
+
+const uiUxProjects = [
+  {
+    title: "Aksara",
+    href: "https://www.figma.com/design/AYqpWNFyWNtl0fosXMpn2q/HOLOGY?node-id=1-2&t=CXIgDgSRJI7vXqB2-1",
+    description: "Product interface exploration for a polished learning/product flow.",
+  },
+  {
+    title: "TreeLand",
+    href: "https://www.figma.com/design/8o7JFvg33wggqgaKVArxzk/TreeLand?node-id=1-3&t=kinPA32VDJ29YDgU-1",
+    description: "UI concept with playful visual hierarchy and clear interaction states.",
+  },
+  {
+    title: "Tutor",
+    href: "https://www.figma.com/design/IZ6TgLQP0c3m1ZRsnwPlqr/TUTOR-PPPL?node-id=3125-668&t=rHrMaIfbz1pHJfEu-1",
+    description: "Education-oriented design system and user flow prototype.",
+  },
+];
+
+const documentProjects = [
+  {
+    title: "Pentesting",
+    href: "https://docs.google.com/document/d/1p0E67x-X7_JSC9v1oCYz7LesBsoKb9r0p5JDA_Av4kU/edit?usp=sharing",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Mobile App",
+    href: "https://docs.google.com/document/d/1LQaw5zjzEI1K4dhBISfURmD4p2TnBld40bEohMH0LJw/edit?usp=sharing",
+    icon: Cpu,
+  },
+  {
+    title: "Software Development",
+    href: "https://docs.google.com/document/d/1Deql-M_Grpn2yaTMJpgsxJTA813vrWmP7Rpvflay96Y/edit?usp=sharing",
+    icon: Terminal,
+  },
+  {
+    title: "Monitoring IT",
+    href: "https://docs.google.com/document/d/17OeNOoJII7WYVFI-VtC9sICWBrr13yfSezNepQDMzfI/edit?usp=sharing",
+    icon: Server,
+  },
+  {
+    title: "ETL",
+    href: "https://docs.google.com/document/d/1Sv2YT4RtqzORGMKRY3PuhPZaG0MUIT9jHfe1gWU9NEI/edit?usp=sharing",
+    icon: Database,
+  },
+];
+
+const algorithmProjects = [
+  {
+    title: "Market Predict",
+    href: "https://github.com/bimorajendraa/market-predict",
+    description: "Prediction-oriented repository for algorithm and data experimentation.",
+  },
+  {
+    title: "Tugas SC Routing",
+    href: "https://github.com/HuSand/TugasSCRouting",
+    description: "Routing and optimization work for soft-computing coursework.",
+  },
+  {
+    title: "Cysec",
+    href: "https://github.com/bimorajendraa/cysec",
+    description: "Cybersecurity learning repository with practical exercises.",
+  },
+  {
+    title: "Graf",
+    href: "https://github.com/bimorajendraa/graf",
+    description: "Graph and algorithm practice with implementation notes.",
+  },
+];
+
+const experiences = [
+  {
+    role: "Web Application Developer / Part-time",
+    company: "PLN Internal Web Application Project",
+    period: "Mar 2026 - Present",
+    description:
+      "Built BESTIE and LISSA features, selected architecture, integrated AI APIs, and implemented RBAC, authorization checks, validation, and safer database workflows.",
+  },
+  {
+    role: "Frontend Developer / Contract",
+    company: "Beta-U",
+    period: "Mar 2025 - Present",
+    description:
+      "Handled Conation frontend development by converting UI designs into responsive pages, integrating backend APIs, and resolving delivery bugs.",
+  },
+  {
+    role: "Information System Department Intern",
+    company: "PT Sucofindo",
+    period: "Jan 2026 - Feb 2026",
+    description:
+      "Created SRS documentation, mapped business processes, and designed UI/UX concepts for a project monitoring system.",
+  },
+  {
+    role: "Frontend Developer / Part-time",
+    company: "PT SAC Inspirasi",
+    period: "Aug 2025 - Jan 2026",
+    description:
+      "Built responsive web interfaces with Vite, Tailwind CSS, and Material UI while supporting API integration and frontend performance.",
+  },
+  {
+    role: "Assistant Lecturer, IT Infrastructure",
+    company: "Institut Teknologi Sepuluh Nopember",
+    period: "Aug 2025 - Dec 2025",
+    description:
+      "Prepared practicum modules for Linux, web servers, IoT, and networking, then guided students through hands-on troubleshooting.",
+  },
+  {
+    role: "Research Technology Application Expert Staff",
+    company: "HMSI ITS",
+    period: "Jan 2026 - Present",
+    description:
+      "Maintained HMSI platforms, deployed apps with Docker on AWS EC2, and used Redis caching to reduce loading delays.",
+  },
+  {
+    role: "IT Development Vice Director",
+    company: "ISE! 2025",
+    period: "Sep 2025 - Dec 2025",
+    description:
+      "Led IT development for a 16,000+ user event platform, including architecture, tech stack decisions, QA, ticketing, and delivery workflow.",
+  },
+  {
+    role: "Head of Web Development",
+    company: "Imajas ITS",
+    period: "Oct 2024 - Oct 2025",
+    description:
+      "Led frontend implementation, bug fixing, optimization, integration, deployment, and cross-division coordination.",
+  },
+  {
+    role: "IT Development Expert Staff",
+    company: "TEDx ITS 2025 and Ini Lho ITS 2025",
+    period: "Sep 2024 - May 2025",
+    description:
+      "Implemented responsive pages with Next.js, Tailwind CSS, shadcn/ui, animation libraries, and API-based dashboard flows.",
+  },
+];
+
+const stats = [
+  { value: "3.74", label: "GPA, Information Systems ITS" },
+  { value: "16K+", label: "users supported in event platform" },
+  { value: "10+", label: "web apps and public launches" },
+  { value: "2026", label: "PLN internal app work" },
+];
+
+const reveal = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0 },
+};
+
+function XLogo({ className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        fill="currentColor"
+        d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
+      />
+    </svg>
+  );
+}
+
+function SectionHeader({ eyebrow, title, description, align = "center" }) {
+  return (
+    <motion.div
+      className={`mx-auto mb-12 max-w-3xl ${
+        align === "left" ? "text-left" : "text-center"
+      }`}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.35 }}
+      variants={reveal}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <span className="inline-flex rounded-full bg-black px-4 py-1 text-sm font-semibold text-white dark:bg-white dark:text-black">
+        {eyebrow}
+      </span>
+      <h2 className="mt-4 text-4xl font-black text-zinc-950 dark:text-zinc-50 md:text-6xl">
+        {title}
+      </h2>
+      {description ? (
+        <p className="mt-4 text-lg leading-8 text-zinc-600 dark:text-zinc-300">
+          {description}
+        </p>
+      ) : null}
+    </motion.div>
+  );
+}
+
+function ExternalAnchor({ href, className, children, label }) {
+  const isExternal = href?.startsWith("http");
+
+  return (
+    <a
+      aria-label={label}
+      className={className}
+      href={href}
+      rel={isExternal ? "noreferrer" : undefined}
+      target={isExternal ? "_blank" : undefined}
+    >
+      {children}
+    </a>
+  );
+}
+
+function HeroCard({ card }) {
+  return (
+    <div
+      className={`floating-card ${card.float} ${card.position} lg:absolute lg:w-60`}
+    >
+      <motion.a
+        className={`${card.color} block min-h-[170px] rounded-lg border border-black/10 p-5 text-zinc-950 shadow-[0_28px_60px_rgba(0,0,0,.14)] transition-colors dark:border-white/15`}
+        href={card.href}
+        rel={card.href.startsWith("http") ? "noreferrer" : undefined}
+        style={{ rotate: card.rotate }}
+        target={card.href.startsWith("http") ? "_blank" : undefined}
+        whileHover={{ rotate: 0, scale: 1.08, y: -10 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 310, damping: 16, mass: 0.8 }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <span className="rounded-md bg-white/70 px-3 py-1 text-xs font-bold uppercase text-zinc-700">
+            {card.meta}
+          </span>
+          <ExternalLink className="h-4 w-4" />
+        </div>
+        <h3 className="mt-7 text-2xl font-black uppercase leading-none">
+          {card.title}
+        </h3>
+        <p className="mt-4 text-sm font-semibold leading-6 text-zinc-700">
+          {card.text}
+        </p>
+      </motion.a>
+    </div>
+  );
+}
+
+function ProjectPreview({ project }) {
+  return (
+    <div
+      className={`relative h-52 overflow-hidden rounded-md border border-black/10 bg-gradient-to-br ${project.accent}`}
+    >
+      <div className="absolute left-4 top-4 flex gap-1">
+        <span className="h-2.5 w-2.5 rounded-full bg-zinc-950/70" />
+        <span className="h-2.5 w-2.5 rounded-full bg-zinc-950/35" />
+        <span className="h-2.5 w-2.5 rounded-full bg-zinc-950/20" />
+      </div>
+      <div className="absolute right-4 top-12 w-32 rounded-md border border-black/10 bg-white/60 p-3 shadow-sm backdrop-blur">
+        <span className="block h-3 w-16 rounded-sm bg-zinc-950/35" />
+        <span className="mt-3 block h-2 w-24 rounded-sm bg-zinc-950/20" />
+        <span className="mt-2 block h-2 w-20 rounded-sm bg-zinc-950/20" />
+      </div>
+      <div className="absolute bottom-5 left-5">
+        <p className="text-xs font-black uppercase text-zinc-600">
+          {project.type}
+        </p>
+        <p className="mt-1 text-6xl font-black uppercase leading-none text-zinc-950/85">
+          {project.short}
+        </p>
+      </div>
+      <div className="absolute bottom-5 right-5 flex items-end gap-1">
+        <span className="block h-9 w-3 rounded-sm bg-zinc-950/25" />
+        <span className="block h-14 w-3 rounded-sm bg-zinc-950/40" />
+        <span className="block h-7 w-3 rounded-sm bg-zinc-950/20" />
+      </div>
+    </div>
+  );
+}
+
+function ProjectCard({ project, index }) {
+  return (
+    <motion.article
+      className="group rounded-lg border border-zinc-200 bg-white p-3 shadow-sm transition-colors hover:border-zinc-950 dark:border-white/10 dark:bg-zinc-900/80 dark:hover:border-white/60"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.18 }}
+      variants={reveal}
+      transition={{
+        delay: Math.min(index * 0.04, 0.22),
+        duration: 0.55,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      whileHover={{ y: -8 }}
+    >
+      <ExternalAnchor href={project.href} label={`Open ${project.title}`}>
+        <ProjectPreview project={project} />
+      </ExternalAnchor>
+      <div className="p-2 pt-4">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase text-zinc-500">
+              {project.type}
+            </p>
+            <h3 className="mt-1 text-2xl font-black text-zinc-950 dark:text-white">
+              {project.title}
+            </h3>
+          </div>
+          <ExternalAnchor
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-white transition-transform group-hover:scale-110 dark:bg-white dark:text-zinc-950"
+            href={project.href}
+            label={`Open ${project.title}`}
+          >
+            <ExternalLink className="h-4 w-4" />
+          </ExternalAnchor>
+        </div>
+        <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+          {project.summary}
+        </p>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              className="rounded-md bg-zinc-100 px-2.5 py-1 text-xs font-semibold text-zinc-700 dark:bg-white/10 dark:text-zinc-200"
+              key={tag}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+function CompactLinkCard({ item, icon: Icon = ExternalLink }) {
+  const CardIcon = item.icon || Icon;
+
+  return (
+    <motion.a
+      className="group flex h-full flex-col justify-between rounded-lg border border-zinc-200 bg-white p-5 text-left shadow-sm transition-colors hover:border-zinc-950 dark:border-white/10 dark:bg-zinc-900/80 dark:hover:border-white/60"
+      href={item.href}
+      rel="noreferrer"
+      target="_blank"
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 280, damping: 20 }}
+    >
+      <div>
+        <div className="flex items-start justify-between gap-4">
+          <CardIcon className="h-5 w-5 text-zinc-950 dark:text-white" />
+          <ExternalLink className="h-4 w-4 text-zinc-400 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+        </div>
+        <h3 className="mt-5 text-xl font-black text-zinc-950 dark:text-white">
+          {item.title}
+        </h3>
+        {item.description ? (
+          <p className="mt-3 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+            {item.description}
+          </p>
+        ) : null}
+      </div>
+    </motion.a>
+  );
+}
+
+function DockIcon({ item, mouseX, isDark, onThemeToggle }) {
+  const ref = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const distance = useTransform(mouseX, (value) => {
+    const bounds = ref.current?.getBoundingClientRect();
+    return bounds ? value - bounds.left - bounds.width / 2 : 10000;
+  });
+  const width = useTransform(distance, [-150, 0, 150], [40, 58, 40], {
+    clamp: true,
+  });
+  const scale = useTransform(distance, [-150, 0, 150], [1, 1.34, 1], {
+    clamp: true,
+  });
+  const Icon = item.icon;
+  const commonClass =
+    "relative inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-700 transition-colors hover:bg-zinc-950 hover:text-white dark:text-zinc-200 dark:hover:bg-white dark:hover:text-zinc-950 sm:h-12 sm:w-12";
+  const isExternal = item.href?.startsWith("http");
+
+  const content = (
+    <>
+      <AnimatePresence>
+        {hovered ? (
+          <motion.span
+            className="pointer-events-none absolute -top-11 whitespace-nowrap rounded-md border border-zinc-200 bg-white px-3 py-1 text-xs font-bold text-zinc-900 shadow-lg dark:border-white/10 dark:bg-zinc-900 dark:text-white"
+            initial={{ opacity: 0, y: 8, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.96 }}
+            transition={{ duration: 0.16 }}
+          >
+            {item.label}
+          </motion.span>
+        ) : null}
+      </AnimatePresence>
+      {item.type === "theme" ? (
+        isDark ? (
+          <Moon className="h-4 w-4" />
+        ) : (
+          <Sun className="h-4 w-4" />
+        )
+      ) : (
+        <Icon className="h-4 w-4" />
+      )}
+    </>
+  );
+
+  return (
+    <motion.div
+      className="relative flex aspect-square items-center justify-center"
+      ref={ref}
+      style={{ width }}
+    >
+      {item.type === "theme" ? (
+        <motion.button
+          aria-label="Toggle theme"
+          className={commonClass}
+          onClick={onThemeToggle}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          style={{ scale }}
+          type="button"
+        >
+          {content}
+        </motion.button>
+      ) : (
+        <motion.a
+          aria-label={item.label}
+          className={commonClass}
+          href={item.href}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          rel={isExternal ? "noreferrer" : undefined}
+          style={{ scale }}
+          target={isExternal ? "_blank" : undefined}
+        >
+          {content}
+        </motion.a>
+      )}
+    </motion.div>
+  );
+}
+
+function DockNavigation({ isDark, onThemeToggle }) {
+  const mouseX = useMotionValue(10000);
+  const dockItems = [
+    { label: "Home", href: "#home", icon: Home },
+    { label: "Projects", href: "#projects", icon: Briefcase },
+    { label: "Docs", href: "#documents", icon: BookOpen },
+    { label: "GitHub", href: links.github, icon: Github },
+    { label: "LinkedIn", href: links.linkedin, icon: Linkedin },
+    { label: "X", href: "#contact", icon: XLogo },
+    { label: "YouTube", href: "#contact", icon: Youtube },
+    { label: "Theme", type: "theme", icon: Sun },
   ];
 
   return (
+    <motion.nav
+      aria-label="Floating portfolio navigation"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-50 mx-auto flex h-24 items-end justify-center pb-4"
+      initial={{ opacity: 0, y: 42 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 180, damping: 20, delay: 0.35 }}
+    >
+      <div className="dock-fade fixed inset-x-0 bottom-0 h-24" />
+      <motion.div
+        className="pointer-events-auto relative mx-auto flex min-h-14 items-center gap-1 rounded-full border border-white/20 bg-white/70 px-2 py-2 shadow-[0_0_0_1px_rgba(0,0,0,.03),0_12px_30px_rgba(0,0,0,.12)] backdrop-blur-md dark:border-white/10 dark:bg-zinc-950/70 dark:shadow-[0_-20px_80px_-20px_rgba(255,255,255,.18)_inset]"
+        onMouseLeave={() => mouseX.set(10000)}
+        onMouseMove={(event) => mouseX.set(event.clientX)}
+      >
+        {dockItems.map((item, index) => (
+          <React.Fragment key={item.label}>
+            {index === 3 || index === 7 ? (
+              <span className="mx-1 h-8 w-px bg-zinc-200 dark:bg-white/10" />
+            ) : null}
+            <DockIcon
+              isDark={isDark}
+              item={item}
+              mouseX={mouseX}
+              onThemeToggle={onThemeToggle}
+            />
+          </React.Fragment>
+        ))}
+      </motion.div>
+    </motion.nav>
+  );
+}
+
+function App() {
+  const [isDark, setIsDark] = useState(() => {
+    const storedTheme = window.localStorage.getItem("portfolio-theme");
+    if (storedTheme) return storedTheme === "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+    window.localStorage.setItem("portfolio-theme", isDark ? "dark" : "light");
+  }, [isDark]);
+
+  return (
     <>
-      <div className="bg-dots bg-size-dots bg-white min-h-screen relative h-full max-h-fit w-screen max-w-full overflow-x-hidden">
-        <Navbar className="bg-transparent">
-          <NavbarBrand>
-            <p className="font-bold text-inherit">BIMO</p>
-          </NavbarBrand>
-          <NavbarContent justify="end">
-            <NavbarItem className="hidden lg:flex">
-              <Link color="foreground" href="#">
-                About Me
-              </Link>
-            </NavbarItem>
-            <NavbarItem className="hidden lg:flex">
-              <Link color="foreground" href="#">
-                Skills
-              </Link>
-            </NavbarItem>
-            <NavbarItem className="hidden lg:flex">
-              <Link color="foreground" href="#">
-                Experience
-              </Link>
-            </NavbarItem>
-            <NavbarItem>
-              <Button as={Link} color="primary" href="#" variant="flat">
-                Hire Me
-              </Button>
-            </NavbarItem>
-          </NavbarContent>
-        </Navbar>
-        <div className="container mx-auto px-4 lg:px-16">
-          <div className="px-8 py-16 lg:px-16 lg:pb-32 h-full ">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-4 my-8 lg:my-12">
-              <div className="flex flex-col justify-center items-center lg:items-start lg:text-left text-center">
-                {/* my cartoon */}
-                <div className="flex items-center justify-center">
-                  <Image
-                    width={150}
-                    height={160}
-                    alt="Cartoon Bimo"
-                    src={asset1}
-                  />
-                  <div className="flex items-center ml-4">
-                    <Image
-                      src={arrow}
-                      width={77}
-                      height={35}
-                      alt="Arrow"
-                      className="w-[77px] h-[35px] mt-8"
+      <main
+        className="site-shell min-h-screen overflow-x-hidden bg-white text-zinc-950 transition-colors dark:bg-zinc-950 dark:text-zinc-50"
+        id="home"
+      >
+        <section className="relative min-h-[84vh] px-5 pb-10 pt-5 sm:px-8 lg:px-12">
+          <div className="mx-auto flex max-w-7xl items-start justify-between gap-6 text-xs font-bold uppercase text-zinc-500 dark:text-zinc-400">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-4 w-4" />
+              Jakarta Selatan / Surabaya
+            </div>
+            <a
+              className="hidden transition-colors hover:text-zinc-950 dark:hover:text-white sm:inline-flex"
+              href={links.email}
+            >
+              bimorajendraa@gmail.com
+            </a>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-7xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="text-sm font-black uppercase text-zinc-500 dark:text-zinc-400">
+                Information Systems ITS - Secure Web, UI/UX, Infrastructure
+              </p>
+              <h1 className="mt-5 text-5xl font-black uppercase leading-none text-zinc-950 dark:text-white sm:text-6xl md:text-7xl 2xl:text-8xl">
+                Bimo Rajendra
+                <span className="block text-zinc-300 dark:text-zinc-700">
+                  Widyadhana
+                </span>
+              </h1>
+            </motion.div>
+
+            <div className="relative mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-4 lg:block lg:h-[330px]">
+              <motion.div
+                className="relative z-10 mx-auto hidden w-52 rounded-lg border border-black/10 bg-white p-4 shadow-[0_40px_90px_rgba(0,0,0,.14)] dark:border-white/10 dark:bg-zinc-900 lg:block"
+                initial={{ opacity: 0, y: 24, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  delay: 0.2,
+                  type: "spring",
+                  stiffness: 160,
+                  damping: 18,
+                }}
+                whileHover={{ y: -12, rotate: 2, scale: 1.04 }}
+              >
+                <img
+                  alt="Bimo Rajendra Widyadhana portrait"
+                  className="h-40 w-full rounded-md object-cover"
+                  loading="lazy"
+                  src="/me.jpeg"
+                />
+                <div className="mt-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <img
+                      alt="Bimo cartoon"
+                      className="h-10 w-10 rounded-full bg-lime-100 object-contain"
+                      src={asset1}
                     />
-                    <p
-                      className="font-bold bg-blue-100 ml-2"
-                      data-aos="zoom-in"
-                      data-aos-delay="100"
-                      data-aos-duration="500"
-                    >
-                      Bimo
+                    <span className="text-left text-sm font-black">Bimo</span>
+                  </div>
+                  <img alt="" className="h-5 w-10 object-contain" src={arrow} />
+                </div>
+              </motion.div>
+
+              {heroCards.map((card) => (
+                <HeroCard card={card} key={card.title} />
+              ))}
+            </div>
+
+            <motion.div
+              className="mx-auto mt-8 flex max-w-2xl flex-col items-center gap-4 text-center lg:hidden"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.55 }}
+            >
+              <p className="text-lg leading-8 text-zinc-600 dark:text-zinc-300">
+                I build secure, useful web applications from requirements and
+                product flows to deployment-ready interfaces.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a
+                  className="inline-flex items-center gap-2 rounded-full bg-zinc-950 px-5 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:bg-white dark:text-zinc-950"
+                  href="#projects"
+                >
+                  View Projects <ExternalLink className="h-4 w-4" />
+                </a>
+                <a
+                  className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/70 px-5 py-3 text-sm font-bold text-zinc-950 backdrop-blur transition-transform hover:-translate-y-1 dark:border-white/15 dark:bg-white/10 dark:text-white"
+                  href="/Bimo-Rajendra-Widyadhana-CV.pdf"
+                >
+                  Open CV <FileText className="h-4 w-4" />
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="px-5 py-20 sm:px-8 lg:px-12" id="about">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+            <motion.div
+              className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-zinc-900/80"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.25 }}
+              variants={reveal}
+              transition={{ duration: 0.55 }}
+            >
+              <img
+                alt="Bimo Rajendra Widyadhana"
+                className="aspect-square w-full rounded-md object-cover"
+                loading="lazy"
+                src="/me.jpeg"
+              />
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.25 }}
+              variants={reveal}
+              transition={{ duration: 0.55, delay: 0.08 }}
+            >
+              <span className="inline-flex rounded-full bg-lime-200 px-4 py-1 text-sm font-black text-zinc-950">
+                About
+              </span>
+              <h2 className="mt-4 text-4xl font-black text-zinc-950 dark:text-white md:text-6xl">
+                Developer who thinks in systems, flows, and risks.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-300">
+                I am an Information Systems undergraduate at Institut Teknologi
+                Sepuluh Nopember with experience in secure web application
+                development, system analysis, IT infrastructure, and IT
+                GRC/cybersecurity fundamentals. I enjoy translating user
+                problems into requirements, BPMN, SRS, application
+                architecture, database workflows, and interfaces that teams can
+                ship confidently.
+              </p>
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {stats.map((stat) => (
+                  <div
+                    className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-white/10 dark:bg-white/5"
+                    key={stat.label}
+                  >
+                    <p className="text-3xl font-black">{stat.value}</p>
+                    <p className="mt-2 text-xs font-semibold uppercase leading-5 text-zinc-500 dark:text-zinc-400">
+                      {stat.label}
                     </p>
                   </div>
-                </div>
-                {/* end my cartoon */}
-                <p className="font-bold text-4xl lg:text-6xl mt-4">
-                  I develop websites and programs!
-                </p>
+                ))}
               </div>
-              <div className="flex flex-col items-center lg:items-end justify-center">
-                <p className="text-lg text-center lg:text-right lg:text-[24px]">
-                  I'll make your little dreams become true.
-                </p>
-                <Button
-                  className="mt-4 bg-black text-white rounded-md text-center lg:px-10 lg:py-6 lg:text-[24px]"
-                  href="#"
-                >
-                  Hire me
-                </Button>
-              </div>
-            </div>
+            </motion.div>
           </div>
-          <div id="about" className="px-8 py-16 lg:px-16 lg:py-32">
-            <div className="flex flex-col items-center lg:flex-row lg:justify-between">
-              <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-8 lg:mb-0">
-                <Image
-                  src="me.jpeg"
-                  alt="Your Name"
-                  width={300}
-                  height={300}
-                  className="rounded-full shadow-lg"
-                  data-aos="fade-right"
-                  data-aos-delay="100"
-                  data-aos-duration="500"
-                />
-              </div>
-              <div className="w-full lg:w-1/2 text-center lg:text-left">
-                <h1
-                  className="text-4xl lg:text-5xl font-bold mb-4"
-                  data-aos="fade-left"
-                  data-aos-delay="100"
-                  data-aos-duration="500"
-                >
-                  About Me
-                </h1>
-                <p
-                  className="text-lg lg:text-xl text-gray-700"
-                  data-aos="fade-left"
-                  data-aos-delay="100"
-                  data-aos-duration="500"
-                >
-                  Hi, I'm Bimo! I'm a passionate developer who loves creating
-                  beautiful and functional websites and programs. My journey in
-                  the tech world began a few years ago, and since then, I've
-                  been continuously learning and growing. I believe in the power
-                  of technology to bring ideas to life and make the world a
-                  better place. Let's build something amazing together!
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="px-8 py-16 lg:px-16 lg:py-32">
-            <div className="bg-blue-100 w-[190px] my-12 items-center justify-center">
-              <p className="font-handlee text-xl font-bold">
-                This is what I love to do
-              </p>
-            </div>
-            <div className="flex flex-wrap justify-center items-start space-x-4">
-              <Card className="h-[300px] transition-all duration-300 w-[300px] bg-yellow-200 border-2 border-yellow-400 rotate-[-8deg] hover:rotate-0">
-                <CardBody>
-                  <p className="font-bold">Web Development</p>
-                  <p>
-                    Building and designing websites with modern technologies
-                    like HTML, CSS, JavaScript, and frameworks. It's all about
-                    creating fast, functional, and user-friendly websites.
-                  </p>
-                </CardBody>
-              </Card>
-              <Card className="h-[300px] w-[300px] bg-blue-200 border-2 border-blue-400 rotate-[10deg] hover:rotate-0">
-                <CardBody>
-                  <p className="font-bold">UI & Product Design</p>
-                  <p>
-                    Crafting intuitive, aesthetically pleasing user interfaces
-                    and user experiences that solve real problems and delight
-                    users. This includes prototyping with tools like Figma and
-                    conducting user research.
-                  </p>
-                </CardBody>
-              </Card>
-              <Card className="h-[300px] w-[300px] bg-pink-200 border-2 border-pink-400 rotate-[-7deg] hover:rotate-0">
-                <CardBody>
-                  <p className="font-bold">Exploring New Things</p>
-                  <p>
-                    Always eager to learn and experiment with new technologies,
-                    tools, or methodologies. Whether it's no-code platforms, new
-                    libraries, somewhere new, or AI tools, the goal is to keep
-                    evolving.
-                  </p>
-                </CardBody>
-              </Card>
-            </div>
-          </div>
-          <div className="px-8 py-16 lg:px-16 lg:py-32">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
-                <p className="font-handlee font-bold text-xl bg-pink-200">
-                  Work Experience
-                </p>
-                <Image
-                  width={40}
-                  height={20}
-                  src={arrow}
-                  alt="Arrow"
-                  className="w-[40px] h-[20px] -rotate-90 my-4 lg:ml-12"
-                />
-                <p className="text-xl lg:text-2xl font-medium mb-4">
-                  I Have a couple Experience
-                </p>
-              </div>
-              <div className="space-y-8">
-                {experiences.map((exp) => (
-                  <div
-                    key={exp.id}
-                    className="flex items-start"
-                    data-aos="fade-left"
-                    data-aos-delay="200"
-                    data-aos-duration="500"
+        </section>
+
+        <section className="px-5 py-20 sm:px-8 lg:px-12" id="skills">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              description="A portfolio should show taste, but it should also show the operating system behind the work. These are the areas I keep sharpening."
+              eyebrow="Core Stack"
+              title="What I Bring"
+            />
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {coreSkills.map((skill, index) => {
+                const Icon = skill.icon;
+                return (
+                  <motion.article
+                    className={`rounded-lg border p-5 ${skill.tone}`}
+                    initial="hidden"
+                    key={skill.title}
+                    transition={{
+                      delay: index * 0.06,
+                      duration: 0.5,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    variants={reveal}
+                    viewport={{ once: true, amount: 0.25 }}
+                    whileHover={{ y: -8 }}
+                    whileInView="visible"
                   >
-                    <Card
-                      className={`w-[50px] h-[50px] flex-shrink-0 ${exp.bgColor} flex items-center justify-center rounded-lg mr-4 border-1 ${exp.borderColor}`}
-                    >
-                      <p className="font-bold text-xl">{exp.id}</p>
-                    </Card>
-                    <div>
-                      <p className="font-bold text-lg">
-                        {exp.title} at{" "}
-                        <span className="text-black">{exp.company}</span>
-                      </p>
-                      <p>{exp.description}</p>
-                      <p className="text-sm text-gray-500">{exp.date}</p>
+                    <Icon className="h-8 w-8 text-zinc-950 dark:text-white" />
+                    <h3 className="mt-5 text-2xl font-black text-zinc-950 dark:text-white">
+                      {skill.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-zinc-700 dark:text-zinc-300">
+                      {skill.description}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {skill.tags.map((tag) => (
+                        <span
+                          className="rounded-md bg-white/70 px-2.5 py-1 text-xs font-bold text-zinc-700 dark:bg-white/10 dark:text-zinc-200"
+                          key={tag}
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
-                  </div>
+                  </motion.article>
+                );
+              })}
+            </div>
+
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              {techStack.map((tech) => (
+                <motion.div
+                  className="flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-2 shadow-sm dark:border-white/10 dark:bg-zinc-900"
+                  key={tech.name}
+                  whileHover={{ y: -5, scale: 1.04 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 18 }}
+                >
+                  <img
+                    alt={tech.name}
+                    className="h-5 w-5 object-contain"
+                    loading="lazy"
+                    src={tech.src}
+                  />
+                  <span className="text-sm font-bold">{tech.name}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-20 sm:px-8 lg:px-12" id="projects">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              description="A mix of internal tools, public event platforms, client work, and product experiments."
+              eyebrow="My Projects"
+              title="Latest Work"
+            />
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {appProjects.map((project, index) => (
+                <ProjectCard index={index} key={project.title} project={project} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-20 sm:px-8 lg:px-12" id="design">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr]">
+            <div>
+              <SectionHeader
+                align="left"
+                description="Figma work that shows product thinking, information structure, and usable interface decisions."
+                eyebrow="UI/UX"
+                title="Design Work"
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {uiUxProjects.map((item) => (
+                <CompactLinkCard icon={Palette} item={item} key={item.title} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-20 sm:px-8 lg:px-12" id="documents">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              description="Documentation matters when systems need to be understood, audited, and improved by more than one person."
+              eyebrow="Documents"
+              title="Analysis and Reports"
+            />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {documentProjects.map((item) => (
+                <CompactLinkCard item={item} key={item.title} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-20 sm:px-8 lg:px-12" id="algorithm">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-start">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {algorithmProjects.map((item) => (
+                <CompactLinkCard icon={Github} item={item} key={item.title} />
+              ))}
+            </div>
+            <div>
+              <SectionHeader
+                align="left"
+                description="A smaller but important corner of the portfolio: algorithms, routing, cybersecurity practice, and graph work."
+                eyebrow="Algo"
+                title="Code Repositories"
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-20 sm:px-8 lg:px-12" id="experience">
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              description="Selected roles from CV, organized around delivery, leadership, infrastructure, and security-aware development."
+              eyebrow="Experience"
+              title="Where I Have Built"
+            />
+            <div className="relative mx-auto max-w-5xl">
+              <div className="absolute bottom-0 left-5 top-0 hidden w-px bg-zinc-200 dark:bg-white/10 md:block" />
+              <div className="space-y-5">
+                {experiences.map((exp, index) => (
+                  <motion.article
+                    className="relative rounded-lg border border-zinc-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-zinc-900/80 md:ml-14"
+                    initial="hidden"
+                    key={`${exp.company}-${exp.period}`}
+                    transition={{
+                      delay: Math.min(index * 0.04, 0.24),
+                      duration: 0.52,
+                    }}
+                    variants={reveal}
+                    viewport={{ once: true, amount: 0.2 }}
+                    whileHover={{ x: 6 }}
+                    whileInView="visible"
+                  >
+                    <span className="absolute -left-[3.45rem] top-6 hidden h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white text-sm font-black text-zinc-950 shadow-sm dark:border-white/10 dark:bg-zinc-950 dark:text-white md:flex">
+                      {index + 1}
+                    </span>
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <h3 className="text-xl font-black text-zinc-950 dark:text-white">
+                          {exp.role}
+                        </h3>
+                        <p className="mt-1 font-bold text-zinc-500">
+                          {exp.company}
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-bold uppercase text-zinc-600 dark:bg-white/10 dark:text-zinc-300">
+                        {exp.period}
+                      </span>
+                    </div>
+                    <p className="mt-4 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+                      {exp.description}
+                    </p>
+                  </motion.article>
                 ))}
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="bg-white w-full">
-        <div className="container mx-auto px-4 lg:px-16 py-16">
-          <div className="flex flex-col lg:flex-row justify-between items-center border-t pt-8 gap-32">
-            <div className="lg:w-1/2 text-center lg:text-left">
-              <h2 className="font-bold text-5xl">Let’s work together</h2>
-              <p className="text-gray-500 my-4">
-                Ready to turn your ideas into reality? Whether you’re looking
-                for a fresh perspective, need help with a project, or just want
-                to chat about tech, I'm here to collaborate. Let’s bring your
-                vision to life and make something amazing together!
-              </p>
-              <p className="text-gray-500 mb-4">Let's build something great!</p>
-              <div className="flex space-x-4 justify-center lg:justify-start">
-                <Link
-                  href="https://www.instagram.com/bimo_rajendra_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                  className="text-black text-3xl hover:text-blue-600 transition-colors"
+        </section>
+
+        <section className="px-5 pb-32 pt-16 sm:px-8 lg:px-12" id="contact">
+          <footer className="mx-auto max-w-7xl rounded-lg border border-zinc-200 bg-zinc-950 p-6 text-white shadow-[0_28px_90px_rgba(0,0,0,.18)] dark:border-white/10 dark:bg-white dark:text-zinc-950 md:p-10">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+              <div>
+                <p className="text-sm font-black uppercase text-lime-300 dark:text-lime-700">
+                  Contact
+                </p>
+                <h2 className="mt-3 text-4xl font-black md:text-6xl">
+                  Let&apos;s build something reliable, usable, and sharp.
+                </h2>
+                <p className="mt-5 max-w-2xl leading-8 text-white/70 dark:text-zinc-600">
+                  Open for frontend, secure web app, UI/UX, documentation, and
+                  infrastructure-focused collaborations.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3 lg:justify-end">
+                <a
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-bold text-zinc-950 transition-transform hover:-translate-y-1 dark:bg-zinc-950 dark:text-white"
+                  href={links.email}
                 >
-                  <i className="fab fa-instagram"></i>
-                </Link>
-                <Link
-                  href="https://github.com/bimorajendraa/"
-                  className="text-black text-3xl hover:text-blue-600 transition-colors"
+                  <Mail className="h-4 w-4" /> Email
+                </a>
+                <a
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  href="/Bimo-Rajendra-Widyadhana-CV.pdf"
                 >
-                  <i className="fab fa-github"></i>
-                </Link>
-                <Link
-                  href="www.linkedin.com/in/bimo-rajendra-64139a284"
-                  className="text-black text-3xl hover:text-blue-600 transition-colors"
+                  <FileText className="h-4 w-4" /> CV
+                </a>
+                <a
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  href={links.github}
+                  rel="noreferrer"
+                  target="_blank"
                 >
-                  <i className="fab fa-linkedin"></i>
-                </Link>
+                  <Github className="h-4 w-4" /> GitHub
+                </a>
+                <a
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  href={links.linkedin}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <Linkedin className="h-4 w-4" /> LinkedIn
+                </a>
+                <a
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  href={links.instagram}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <Instagram className="h-4 w-4" /> Instagram
+                </a>
               </div>
             </div>
-            <div className="lg:w-1/2 mt-8 lg:mt-0">
-              <form className="flex flex-col space-y-4">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="bg-gray-100 p-4 rounded-md border border-gray-300"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  className="bg-gray-100 p-4 rounded-md border border-gray-300"
-                />
-                <textarea
-                  placeholder="Type your message here"
-                  className="bg-gray-100 p-4 rounded-md border border-gray-300"
-                  rows="4"
-                ></textarea>
-                <button
-                  type="submit"
-                  className="bg-black text-white py-4 rounded-md"
-                >
-                  Submit
-                </button>
-              </form>
+            <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 text-sm font-semibold text-white/55 dark:border-zinc-200 dark:text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+              <p>Bimo Rajendra Widyadhana</p>
+              <p>Jakarta Selatan - Surabaya - 2026</p>
             </div>
-          </div>
-        </div>
-      </div>
+          </footer>
+        </section>
+      </main>
+      <DockNavigation
+        isDark={isDark}
+        onThemeToggle={() => setIsDark((current) => !current)}
+      />
     </>
   );
 }
