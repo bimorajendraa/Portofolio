@@ -236,12 +236,14 @@ const uiUxProjects = [
   {
     title: "Aksara",
     href: "https://www.figma.com/design/AYqpWNFyWNtl0fosXMpn2q/HOLOGY?node-id=1-2&t=CXIgDgSRJI7vXqB2-1",
-    description: "Product interface exploration for a polished learning/product flow.",
+    description:
+      "Product interface exploration for a polished learning/product flow.",
   },
   {
     title: "TreeLand",
     href: "https://www.figma.com/design/8o7JFvg33wggqgaKVArxzk/TreeLand?node-id=1-3&t=kinPA32VDJ29YDgU-1",
-    description: "UI concept with playful visual hierarchy and clear interaction states.",
+    description:
+      "UI concept with playful visual hierarchy and clear interaction states.",
   },
   {
     title: "Tutor",
@@ -282,7 +284,8 @@ const algorithmProjects = [
   {
     title: "Market Predict",
     href: "https://github.com/bimorajendraa/market-predict",
-    description: "Prediction-oriented repository for algorithm and data experimentation.",
+    description:
+      "Prediction-oriented repository for algorithm and data experimentation.",
   },
   {
     title: "Tugas SC Routing",
@@ -677,7 +680,6 @@ function DockNavigation({ isDark, onThemeToggle }) {
     { label: "GitHub", href: links.github, icon: Github },
     { label: "LinkedIn", href: links.linkedin, icon: Linkedin },
     { label: "X", href: "#contact", icon: XLogo },
-    { label: "YouTube", href: "#contact", icon: Youtube },
     { label: "Theme", type: "theme", icon: Sun },
   ];
 
@@ -862,9 +864,9 @@ function App() {
                 Sepuluh Nopember with experience in secure web application
                 development, system analysis, IT infrastructure, and IT
                 GRC/cybersecurity fundamentals. I enjoy translating user
-                problems into requirements, BPMN, SRS, application
-                architecture, database workflows, and interfaces that teams can
-                ship confidently.
+                problems into requirements, BPMN, SRS, application architecture,
+                database workflows, and interfaces that teams can ship
+                confidently.
               </p>
               <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {stats.map((stat) => (
@@ -961,7 +963,11 @@ function App() {
             />
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
               {appProjects.map((project, index) => (
-                <ProjectCard index={index} key={project.title} project={project} />
+                <ProjectCard
+                  index={index}
+                  key={project.title}
+                  project={project}
+                />
               ))}
             </div>
           </div>
