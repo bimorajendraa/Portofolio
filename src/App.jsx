@@ -1,15 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   BookOpen,
   Briefcase,
   Code2,
+  Contact2,
   Cpu,
   Database,
   ExternalLink,
@@ -27,7 +23,6 @@ import {
   ShieldCheck,
   Sun,
   Terminal,
-  Youtube,
 } from "lucide-react";
 import "./index.css";
 import asset1 from "./assets/asset1.png";
@@ -43,47 +38,46 @@ const links = {
 
 const heroCards = [
   {
-    title: "LISSA + BESTIE",
-    meta: "PLN internal web apps",
-    href: "https://lissa-app.anargya.fun/",
-    color: "bg-cyan-100 dark:bg-cyan-300",
+    title: "Corporate Web Apps",
+    meta: "Next js, Vite js",
+    href: "#projects",
+    color: "bg-cyan-100 dark:bg-cyan-950/85",
     text: "Secure workflows, AI API, RBAC",
     float: "float-a",
     rotate: -7,
-    position: "lg:left-6 lg:top-20",
+    position: "lg:left-[2%] lg:top-[88px] lg:w-[270px]",
   },
   {
     title: "UI/UX Systems",
     meta: "Aksara, TreeLand, Tutor",
     href: "https://www.figma.com/design/AYqpWNFyWNtl0fosXMpn2q/HOLOGY?node-id=1-2&t=CXIgDgSRJI7vXqB2-1",
-    color: "bg-lime-100 dark:bg-lime-300",
+    color: "bg-lime-100 dark:bg-emerald-950/85",
     text: "Interfaces that turn messy flows into clear product screens",
     float: "float-b",
     rotate: 5,
-    position: "lg:left-[27%] lg:top-0",
+    position: "lg:left-[23%] lg:top-[46px] lg:w-[260px]",
   },
   {
     title: "GRC + Security",
     meta: "Pentest reports and risk notes",
-    href: "https://docs.google.com/document/d/1p0E67x-X7_JSC9v1oCYz7LesBsoKb9r0p5JDA_Av4kU/edit?usp=sharing",
-    color: "bg-rose-100 dark:bg-rose-300",
+    href: "#documents",
+    color: "bg-rose-100 dark:bg-rose-950/80",
     text: "OWASP ZAP, PortSwigger, validation-aware development",
     float: "float-c",
     rotate: -4,
-    position: "lg:right-[26%] lg:top-24",
+    position: "lg:right-[23%] lg:top-[80px] lg:w-[260px]",
   },
   {
     title: "Infrastructure",
     meta: "Docker, EC2, Redis, Linux",
     href: "#skills",
-    color: "bg-amber-100 dark:bg-amber-300",
+    color: "bg-amber-100 dark:bg-stone-900",
     text: "Web servers, networking labs, deployment monitoring",
     float: "float-d",
     rotate: 6,
-    position: "lg:right-8 lg:top-4",
+    position: "lg:right-[2%] lg:top-[36px] lg:w-[270px]",
   },
 ];
-
 const coreSkills = [
   {
     icon: ShieldCheck,
@@ -129,30 +123,41 @@ const techStack = [
   { name: "Vite", src: "/vite.png" },
 ];
 
+const screenshotUrl = (href) =>
+  `https://image.thum.io/get/width/1200/crop/760/noanimate/${href}`;
+
+const getProjectDomain = (href) => {
+  try {
+    return new URL(href).hostname.replace(/^www\./, "");
+  } catch {
+    return href;
+  }
+};
+
 const appProjects = [
   {
     title: "Aksara",
-    type: "App + Repository",
+    type: "Mobile App",
     href: "https://github.com/bimorajendraa/aksara",
     summary:
       "Application build connected to product design work, focused on usable flows and maintainable frontend structure.",
-    tags: ["React", "Frontend", "GitHub"],
+    tags: ["Flutter", "Dart", "GitHub", "Supabase"],
     accent: "from-lime-200 via-white to-cyan-100",
     short: "AKS",
   },
   {
     title: "LISSA",
-    type: "PLN Internal App",
+    type: "Corporate Platform",
     href: "https://lissa-app.anargya.fun/",
     summary:
       "Internal web application with database-backed workflows, AI API integration, and security-conscious access controls.",
-    tags: ["AI API", "RBAC", "Database", "Secure Web"],
+    tags: ["RBAC", "Database", "Secure Web"],
     accent: "from-cyan-200 via-white to-sky-100",
     short: "LIS",
   },
   {
     title: "BESTIE",
-    type: "PLN Internal App",
+    type: "Corporate Platform",
     href: "https://bestie-app.anargya.fun/",
     summary:
       "Web platform contribution across architecture choices, feature development, validation, and application workflows.",
@@ -162,7 +167,7 @@ const appProjects = [
   },
   {
     title: "Conation",
-    type: "Contract Frontend",
+    type: "UMKM Platform",
     href: "https://www.conation.co.id/",
     summary:
       "Converted UI designs into responsive pages, integrated required flows, and resolved functional/UI bugs with Beta-U.",
@@ -172,7 +177,7 @@ const appProjects = [
   },
   {
     title: "Study at SAC",
-    type: "Part-time Frontend",
+    type: "Corporate Platform",
     href: "https://studyatsac.com/",
     summary:
       "Built responsive and interactive interfaces with Vite, Tailwind CSS, Material UI, and backend API collaboration.",
@@ -191,8 +196,18 @@ const appProjects = [
     short: "RDK",
   },
   {
+    title: "HMSI Eksternal",
+    type: "Organization Platform",
+    href: "https://eksternal.hmsi-its.my.id/",
+    summary:
+      "External-facing HMSI ITS platform for organization communication, public information, and stakeholder access.",
+    tags: ["Frontend", "HMSI ITS", "Responsive", "Deployment"],
+    accent: "from-blue-200 via-white to-lime-100",
+    short: "HMS",
+  },
+  {
     title: "Asuka Trainee",
-    type: "Web Platform",
+    type: "Corporate Platform",
     href: "https://asukatrainee-fe.vercel.app/",
     summary:
       "Frontend implementation for committee/product needs with clean navigation, component structure, and deployment.",
@@ -288,26 +303,26 @@ const algorithmProjects = [
       "Prediction-oriented repository for algorithm and data experimentation.",
   },
   {
-    title: "Tugas SC Routing",
+    title: "Routing Optimization",
     href: "https://github.com/HuSand/TugasSCRouting",
     description: "Routing and optimization work for soft-computing coursework.",
   },
   {
-    title: "Cysec",
+    title: "Cyber Security",
     href: "https://github.com/bimorajendraa/cysec",
     description: "Cybersecurity learning repository with practical exercises.",
   },
   {
     title: "Graf",
     href: "https://github.com/bimorajendraa/graf",
-    description: "Graph and algorithm practice with implementation notes.",
+    description: "Graph and algorithm practice with implementation.",
   },
 ];
 
 const experiences = [
   {
     role: "Web Application Developer / Part-time",
-    company: "PLN Internal Web Application Project",
+    company: "PLN",
     period: "Mar 2026 - Present",
     description:
       "Built BESTIE and LISSA features, selected architecture, integrated AI APIs, and implemented RBAC, authorization checks, validation, and safer database workflows.",
@@ -382,23 +397,6 @@ const reveal = {
   visible: { opacity: 1, y: 0 },
 };
 
-function XLogo({ className }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        fill="currentColor"
-        d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
-      />
-    </svg>
-  );
-}
-
 function SectionHeader({ eyebrow, title, description, align = "center" }) {
   return (
     <motion.div
@@ -411,7 +409,7 @@ function SectionHeader({ eyebrow, title, description, align = "center" }) {
       variants={reveal}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
-      <span className="inline-flex rounded-full bg-black px-4 py-1 text-sm font-semibold text-white dark:bg-white dark:text-black">
+      <span className="inline-flex rounded-full bg-black px-4 py-1 text-sm font-semibold text-white dark:bg-zinc-800 dark:text-zinc-100">
         {eyebrow}
       </span>
       <h2 className="mt-4 text-4xl font-black text-zinc-950 dark:text-zinc-50 md:text-6xl">
@@ -443,30 +441,37 @@ function ExternalAnchor({ href, className, children, label }) {
 }
 
 function HeroCard({ card }) {
+  const titleSize =
+    card.title.length > 13
+      ? "lg:text-[1.45rem] 2xl:text-2xl"
+      : "lg:text-2xl 2xl:text-[1.7rem]";
+
   return (
     <div
-      className={`floating-card ${card.float} ${card.position} lg:absolute lg:w-60`}
+      className={`floating-card ${card.float} relative z-10 lg:absolute ${card.position}`}
     >
       <motion.a
-        className={`${card.color} block min-h-[170px] rounded-lg border border-black/10 p-5 text-zinc-950 shadow-[0_28px_60px_rgba(0,0,0,.14)] transition-colors dark:border-white/15`}
+        className={`${card.color} block min-h-[178px] w-full rounded-lg border border-black/10 p-5 text-zinc-950 shadow-[0_22px_48px_rgba(0,0,0,.12)] transition-colors dark:border-white/10 dark:text-zinc-100 dark:shadow-[0_24px_60px_rgba(0,0,0,.28)] lg:min-h-[190px]`}
         href={card.href}
         rel={card.href.startsWith("http") ? "noreferrer" : undefined}
-        style={{ rotate: card.rotate }}
+        style={{ rotate: card.rotate / 2 }}
         target={card.href.startsWith("http") ? "_blank" : undefined}
         whileHover={{ rotate: 0, scale: 1.08, y: -10 }}
         whileTap={{ scale: 0.98 }}
         transition={{ type: "spring", stiffness: 310, damping: 16, mass: 0.8 }}
       >
         <div className="flex items-start justify-between gap-4">
-          <span className="rounded-md bg-white/70 px-3 py-1 text-xs font-bold uppercase text-zinc-700">
+          <span className="max-w-[80%] rounded-md bg-white/70 px-3 py-1 text-xs font-bold uppercase leading-4 text-zinc-700 dark:bg-white/10 dark:text-zinc-100">
             {card.meta}
           </span>
-          <ExternalLink className="h-4 w-4" />
+          <ExternalLink className="h-4 w-4 shrink-0" />
         </div>
-        <h3 className="mt-7 text-2xl font-black uppercase leading-none">
+        <h3
+          className={`mt-7 text-2xl font-black uppercase leading-tight ${titleSize}`}
+        >
           {card.title}
         </h3>
-        <p className="mt-4 text-sm font-semibold leading-6 text-zinc-700">
+        <p className="mt-3 text-sm font-semibold leading-6 text-zinc-700 dark:text-zinc-300">
           {card.text}
         </p>
       </motion.a>
@@ -475,32 +480,34 @@ function HeroCard({ card }) {
 }
 
 function ProjectPreview({ project }) {
+  const image = project.image || screenshotUrl(project.href);
+  const domain = getProjectDomain(project.href);
+
   return (
     <div
       className={`relative h-52 overflow-hidden rounded-md border border-black/10 bg-gradient-to-br ${project.accent}`}
     >
-      <div className="absolute left-4 top-4 flex gap-1">
-        <span className="h-2.5 w-2.5 rounded-full bg-zinc-950/70" />
-        <span className="h-2.5 w-2.5 rounded-full bg-zinc-950/35" />
-        <span className="h-2.5 w-2.5 rounded-full bg-zinc-950/20" />
+      <img
+        alt={`${project.title} preview`}
+        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        loading="lazy"
+        onError={(event) => {
+          event.currentTarget.style.opacity = "0";
+        }}
+        src={image}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/25 to-zinc-950/5" />
+      <div className="absolute left-4 top-4 flex max-w-[calc(100%-2rem)] items-center gap-2 rounded-md border border-white/25 bg-white/85 px-3 py-1 text-xs font-black text-zinc-950 shadow-sm backdrop-blur">
+        <span className="h-2 w-2 shrink-0 rounded-full bg-lime-400" />
+        <span className="truncate">{domain}</span>
       </div>
-      <div className="absolute right-4 top-12 w-32 rounded-md border border-black/10 bg-white/60 p-3 shadow-sm backdrop-blur">
-        <span className="block h-3 w-16 rounded-sm bg-zinc-950/35" />
-        <span className="mt-3 block h-2 w-24 rounded-sm bg-zinc-950/20" />
-        <span className="mt-2 block h-2 w-20 rounded-sm bg-zinc-950/20" />
-      </div>
-      <div className="absolute bottom-5 left-5">
-        <p className="text-xs font-black uppercase text-zinc-600">
+      <div className="absolute bottom-5 left-5 right-5">
+        <p className="text-xs font-black uppercase text-white/70">
           {project.type}
         </p>
-        <p className="mt-1 text-6xl font-black uppercase leading-none text-zinc-950/85">
-          {project.short}
+        <p className="mt-1 text-4xl font-black uppercase leading-none text-white">
+          {project.title}
         </p>
-      </div>
-      <div className="absolute bottom-5 right-5 flex items-end gap-1">
-        <span className="block h-9 w-3 rounded-sm bg-zinc-950/25" />
-        <span className="block h-14 w-3 rounded-sm bg-zinc-950/40" />
-        <span className="block h-7 w-3 rounded-sm bg-zinc-950/20" />
       </div>
     </div>
   );
@@ -590,22 +597,11 @@ function CompactLinkCard({ item, icon: Icon = ExternalLink }) {
   );
 }
 
-function DockIcon({ item, mouseX, isDark, onThemeToggle }) {
-  const ref = useRef(null);
+function DockIcon({ item, isDark, onThemeToggle }) {
   const [hovered, setHovered] = useState(false);
-  const distance = useTransform(mouseX, (value) => {
-    const bounds = ref.current?.getBoundingClientRect();
-    return bounds ? value - bounds.left - bounds.width / 2 : 10000;
-  });
-  const width = useTransform(distance, [-150, 0, 150], [40, 58, 40], {
-    clamp: true,
-  });
-  const scale = useTransform(distance, [-150, 0, 150], [1, 1.34, 1], {
-    clamp: true,
-  });
   const Icon = item.icon;
   const commonClass =
-    "relative inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-700 transition-colors hover:bg-zinc-950 hover:text-white dark:text-zinc-200 dark:hover:bg-white dark:hover:text-zinc-950 sm:h-12 sm:w-12";
+    "relative inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-700 transition-colors hover:bg-zinc-950 hover:text-white dark:text-zinc-200 dark:hover:bg-white dark:hover:text-zinc-950 sm:h-11 sm:w-11";
   const isExternal = item.href?.startsWith("http");
 
   const content = (
@@ -613,7 +609,7 @@ function DockIcon({ item, mouseX, isDark, onThemeToggle }) {
       <AnimatePresence>
         {hovered ? (
           <motion.span
-            className="pointer-events-none absolute -top-11 whitespace-nowrap rounded-md border border-zinc-200 bg-white px-3 py-1 text-xs font-bold text-zinc-900 shadow-lg dark:border-white/10 dark:bg-zinc-900 dark:text-white"
+            className="pointer-events-none absolute -top-11 whitespace-nowrap rounded-md border border-zinc-200 bg-white px-3 py-1 text-xs font-bold text-zinc-900 shadow-lg dark:border-white/10 dark:bg-zinc-800 dark:text-white"
             initial={{ opacity: 0, y: 8, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 6, scale: 0.96 }}
@@ -636,11 +632,7 @@ function DockIcon({ item, mouseX, isDark, onThemeToggle }) {
   );
 
   return (
-    <motion.div
-      className="relative flex aspect-square items-center justify-center"
-      ref={ref}
-      style={{ width }}
-    >
+    <div className="relative flex h-9 w-9 shrink-0 items-center justify-center sm:h-11 sm:w-11">
       {item.type === "theme" ? (
         <motion.button
           aria-label="Toggle theme"
@@ -648,8 +640,9 @@ function DockIcon({ item, mouseX, isDark, onThemeToggle }) {
           onClick={onThemeToggle}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          style={{ scale }}
           type="button"
+          whileHover={{ y: -3 }}
+          whileTap={{ scale: 0.94 }}
         >
           {content}
         </motion.button>
@@ -661,25 +654,25 @@ function DockIcon({ item, mouseX, isDark, onThemeToggle }) {
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
           rel={isExternal ? "noreferrer" : undefined}
-          style={{ scale }}
           target={isExternal ? "_blank" : undefined}
+          whileHover={{ y: -3 }}
+          whileTap={{ scale: 0.94 }}
         >
           {content}
         </motion.a>
       )}
-    </motion.div>
+    </div>
   );
 }
 
 function DockNavigation({ isDark, onThemeToggle }) {
-  const mouseX = useMotionValue(10000);
   const dockItems = [
     { label: "Home", href: "#home", icon: Home },
     { label: "Projects", href: "#projects", icon: Briefcase },
     { label: "Docs", href: "#documents", icon: BookOpen },
     { label: "GitHub", href: links.github, icon: Github },
     { label: "LinkedIn", href: links.linkedin, icon: Linkedin },
-    { label: "X", href: "#contact", icon: XLogo },
+    { label: "Contact", href: "#contact", icon: Contact2 },
     { label: "Theme", type: "theme", icon: Sun },
   ];
 
@@ -692,20 +685,15 @@ function DockNavigation({ isDark, onThemeToggle }) {
       transition={{ type: "spring", stiffness: 180, damping: 20, delay: 0.35 }}
     >
       <div className="dock-fade fixed inset-x-0 bottom-0 h-24" />
-      <motion.div
-        className="pointer-events-auto relative mx-auto flex min-h-14 items-center gap-1 rounded-full border border-white/20 bg-white/70 px-2 py-2 shadow-[0_0_0_1px_rgba(0,0,0,.03),0_12px_30px_rgba(0,0,0,.12)] backdrop-blur-md dark:border-white/10 dark:bg-zinc-950/70 dark:shadow-[0_-20px_80px_-20px_rgba(255,255,255,.18)_inset]"
-        onMouseLeave={() => mouseX.set(10000)}
-        onMouseMove={(event) => mouseX.set(event.clientX)}
-      >
+      <motion.div className="pointer-events-auto relative mx-auto flex max-w-[calc(100vw-1.5rem)] items-center gap-1 rounded-full border border-white/20 bg-white/75 px-2 py-2 shadow-[0_0_0_1px_rgba(0,0,0,.03),0_12px_30px_rgba(0,0,0,.12)] backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/85 dark:shadow-[0_18px_50px_rgba(0,0,0,.28)]">
         {dockItems.map((item, index) => (
           <React.Fragment key={item.label}>
-            {index === 3 || index === 7 ? (
+            {index === 3 ? (
               <span className="mx-1 h-8 w-px bg-zinc-200 dark:bg-white/10" />
             ) : null}
             <DockIcon
               isDark={isDark}
               item={item}
-              mouseX={mouseX}
               onThemeToggle={onThemeToggle}
             />
           </React.Fragment>
@@ -730,10 +718,10 @@ function App() {
   return (
     <>
       <main
-        className="site-shell min-h-screen overflow-x-hidden bg-white text-zinc-950 transition-colors dark:bg-zinc-950 dark:text-zinc-50"
+        className="site-shell min-h-screen overflow-x-hidden bg-white text-zinc-950 transition-colors dark:bg-[#111113] dark:text-zinc-100"
         id="home"
       >
-        <section className="relative min-h-[84vh] px-5 pb-10 pt-5 sm:px-8 lg:px-12">
+        <section className="relative px-5 pb-10 pt-5 sm:px-8 lg:min-h-[86vh] lg:px-12 lg:pb-16">
           <div className="mx-auto flex max-w-7xl items-start justify-between gap-6 text-xs font-bold uppercase text-zinc-500 dark:text-zinc-400">
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4" />
@@ -747,26 +735,45 @@ function App() {
             </a>
           </div>
 
-          <div className="mx-auto mt-10 max-w-7xl text-center">
+          <div className="mx-auto mt-8 max-w-7xl text-center lg:mt-6">
             <motion.div
+              className="relative z-20 mx-auto max-w-6xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="text-sm font-black uppercase text-zinc-500 dark:text-zinc-400">
-                Information Systems ITS - Secure Web, UI/UX, Infrastructure
+                Information Systems ITS - Software Engineering, UI/UX,
+                Infrastructure, Product Management
               </p>
-              <h1 className="mt-5 text-5xl font-black uppercase leading-none text-zinc-950 dark:text-white sm:text-6xl md:text-7xl 2xl:text-8xl">
+              <h1 className="mt-5 text-[2.35rem] font-black uppercase leading-none tracking-tight text-zinc-950 dark:text-white min-[400px]:text-5xl sm:text-6xl md:text-7xl lg:text-8xl 2xl:text-[6.8rem]">
                 Bimo Rajendra
                 <span className="block text-zinc-300 dark:text-zinc-700">
                   Widyadhana
                 </span>
               </h1>
+              <p className="mx-auto mt-6 max-w-xl text-center text-base leading-7 text-zinc-600 dark:text-zinc-300 sm:text-lg sm:leading-8">
+                I build fun things with secure, useful web applications from
+                requirements and product flows to deployment-ready interfaces.
+              </p>
+              <div className="mt-7 flex flex-wrap justify-center gap-3">
+                <a
+                  className="inline-flex items-center gap-2 rounded-full bg-zinc-950 px-5 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:bg-white dark:text-zinc-950"
+                  href="#projects"
+                >
+                  View Projects <ExternalLink className="h-4 w-4" />
+                </a>
+                <a
+                  className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/70 px-5 py-3 text-sm font-bold text-zinc-950 backdrop-blur transition-transform hover:-translate-y-1 dark:border-white/15 dark:bg-white/10 dark:text-white"
+                  href="/Bimo-Rajendra-Widyadhana-CV.pdf"
+                >
+                  Open CV <FileText className="h-4 w-4" />
+                </a>
+              </div>
             </motion.div>
-
-            <div className="relative mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-4 lg:block lg:h-[330px]">
+            <div className="relative mx-auto mt-10 grid w-full max-w-2xl grid-cols-1 gap-8 md:gap-10 lg:mt-8 lg:block lg:h-[350px] lg:max-w-6xl">
               <motion.div
-                className="relative z-10 mx-auto hidden w-52 rounded-lg border border-black/10 bg-white p-4 shadow-[0_40px_90px_rgba(0,0,0,.14)] dark:border-white/10 dark:bg-zinc-900 lg:block"
+                className="relative z-30 mx-auto w-52 rounded-lg border border-black/10 bg-white p-4 shadow-[0_32px_70px_rgba(0,0,0,.13)] dark:border-white/10 dark:bg-zinc-900 lg:absolute lg:left-[calc(50%-110px)] lg:top-[54px] lg:w-[220px]"
                 initial={{ opacity: 0, y: 24, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{
@@ -779,7 +786,7 @@ function App() {
               >
                 <img
                   alt="Bimo Rajendra Widyadhana portrait"
-                  className="h-40 w-full rounded-md object-cover"
+                  className="h-56 w-full rounded-md object-cover lg:h-40"
                   loading="lazy"
                   src="/me.jpeg"
                 />
@@ -795,37 +802,12 @@ function App() {
                   <img alt="" className="h-5 w-10 object-contain" src={arrow} />
                 </div>
               </motion.div>
-
-              {heroCards.map((card) => (
-                <HeroCard card={card} key={card.title} />
-              ))}
-            </div>
-
-            <motion.div
-              className="mx-auto mt-8 flex max-w-2xl flex-col items-center gap-4 text-center lg:hidden"
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.55 }}
-            >
-              <p className="text-lg leading-8 text-zinc-600 dark:text-zinc-300">
-                I build secure, useful web applications from requirements and
-                product flows to deployment-ready interfaces.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <a
-                  className="inline-flex items-center gap-2 rounded-full bg-zinc-950 px-5 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:bg-white dark:text-zinc-950"
-                  href="#projects"
-                >
-                  View Projects <ExternalLink className="h-4 w-4" />
-                </a>
-                <a
-                  className="inline-flex items-center gap-2 rounded-full border border-zinc-300 bg-white/70 px-5 py-3 text-sm font-bold text-zinc-950 backdrop-blur transition-transform hover:-translate-y-1 dark:border-white/15 dark:bg-white/10 dark:text-white"
-                  href="/Bimo-Rajendra-Widyadhana-CV.pdf"
-                >
-                  Open CV <FileText className="h-4 w-4" />
-                </a>
+              <div className="grid gap-8 md:gap-10 lg:block">
+                {heroCards.map((card) => (
+                  <HeroCard card={card} key={card.title} />
+                ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -857,7 +839,7 @@ function App() {
                 About
               </span>
               <h2 className="mt-4 text-4xl font-black text-zinc-950 dark:text-white md:text-6xl">
-                Developer who thinks in systems, flows, and risks.
+                Developer who loves think in systems, flows, and risks.
               </h2>
               <p className="mt-6 text-lg leading-8 text-zinc-600 dark:text-zinc-300">
                 I am an Information Systems undergraduate at Institut Teknologi
@@ -1017,7 +999,7 @@ function App() {
               <SectionHeader
                 align="left"
                 description="A smaller but important corner of the portfolio: algorithms, routing, cybersecurity practice, and graph work."
-                eyebrow="Algo"
+                eyebrow="Algorithm"
                 title="Code Repositories"
               />
             </div>
@@ -1075,35 +1057,35 @@ function App() {
         </section>
 
         <section className="px-5 pb-32 pt-16 sm:px-8 lg:px-12" id="contact">
-          <footer className="mx-auto max-w-7xl rounded-lg border border-zinc-200 bg-zinc-950 p-6 text-white shadow-[0_28px_90px_rgba(0,0,0,.18)] dark:border-white/10 dark:bg-white dark:text-zinc-950 md:p-10">
+          <footer className="mx-auto max-w-7xl rounded-lg border border-zinc-200 bg-zinc-950 p-6 text-white shadow-[0_28px_90px_rgba(0,0,0,.18)] dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-50 md:p-10">
             <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
               <div>
-                <p className="text-sm font-black uppercase text-lime-300 dark:text-lime-700">
+                <p className="text-sm font-black uppercase text-lime-300">
                   Contact
                 </p>
                 <h2 className="mt-3 text-4xl font-black md:text-6xl">
-                  Let&apos;s build something reliable, usable, and sharp.
+                  Let&apos;s build something reliable, usable, and fun.
                 </h2>
-                <p className="mt-5 max-w-2xl leading-8 text-white/70 dark:text-zinc-600">
-                  Open for frontend, secure web app, UI/UX, documentation, and
-                  infrastructure-focused collaborations.
+                <p className="mt-5 max-w-2xl leading-8 text-white/70 dark:text-zinc-300">
+                  Open for frontend, web app, UI/UX, documentation, System
+                  Analyst, and infrastructure-focused collaborations.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3 lg:justify-end">
                 <a
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-bold text-zinc-950 transition-transform hover:-translate-y-1 dark:bg-zinc-950 dark:text-white"
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-bold text-zinc-950 transition-transform hover:-translate-y-1 dark:bg-zinc-100 dark:text-zinc-950"
                   href={links.email}
                 >
                   <Mail className="h-4 w-4" /> Email
                 </a>
                 <a
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-white/15 dark:text-zinc-100"
                   href="/Bimo-Rajendra-Widyadhana-CV.pdf"
                 >
                   <FileText className="h-4 w-4" /> CV
                 </a>
                 <a
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-white/15 dark:text-zinc-100"
                   href={links.github}
                   rel="noreferrer"
                   target="_blank"
@@ -1111,7 +1093,7 @@ function App() {
                   <Github className="h-4 w-4" /> GitHub
                 </a>
                 <a
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-white/15 dark:text-zinc-100"
                   href={links.linkedin}
                   rel="noreferrer"
                   target="_blank"
@@ -1119,7 +1101,7 @@ function App() {
                   <Linkedin className="h-4 w-4" /> LinkedIn
                 </a>
                 <a
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-zinc-300 dark:text-zinc-950"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-1 dark:border-white/15 dark:text-zinc-100"
                   href={links.instagram}
                   rel="noreferrer"
                   target="_blank"
@@ -1128,7 +1110,7 @@ function App() {
                 </a>
               </div>
             </div>
-            <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 text-sm font-semibold text-white/55 dark:border-zinc-200 dark:text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-10 flex flex-col gap-2 border-t border-white/10 pt-5 text-sm font-semibold text-white/55 dark:border-white/10 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
               <p>Bimo Rajendra Widyadhana</p>
               <p>Jakarta Selatan - Surabaya - 2026</p>
             </div>

@@ -40,7 +40,7 @@ a {
 }
 
 .dark .site-shell {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
 }
 
 .floating-card {
@@ -71,7 +71,7 @@ a {
 }
 
 .dark .dock-fade {
-  background: linear-gradient(to top, rgba(9, 9, 11, 0.94), transparent);
+  background: linear-gradient(to top, rgba(17, 17, 19, 0.9), transparent);
 }
 
 @keyframes float-a {
